@@ -3,10 +3,18 @@ async function updateDashboard() {
     const data = await response.json();
 
     // CPU, RAM, Disk bars
-    document.getElementById('cpu-fill').style.width = data.cpu + '%';
-    document.getElementById('ram-fill').style.width = data.ram + '%';
-    document.getElementById('disk-fill').style.width = data.disk + '%';
-    
+    const cpuFill = document.getElementById('cpu-fill');
+    const ramFill = document.getElementById('ram-fill');
+    const diskFill = document.getElementById('disk-fill');
+
+    cpuFill.style.width = data.cpu + '%';
+    ramFill.style.width = data.ram + '%';
+    diskFill.style.width = data.disk + '%';
+
+    applyWarningColor(cpuFill, data.cpu);
+    applyWarningColor(ramFill, data.ram);
+    applyWarningColor(diskFill, data.disk);
+
     // Labels: CPU, RAM, TEMP, DISK
     document.getElementById('cpu-txt').innerText = Math.round(data.cpu) + '%';
     document.getElementById('ram-txt').innerText = Math.round(data.ram) + '%';
@@ -84,5 +92,19 @@ function tempColorForPercent(pct){
         const y = hexToRgb('#f59e0b');
         const r = hexToRgb('#ef4444');
         return rgbToHex(lerp(y[0], r[0], t), lerp(y[1], r[1], t), lerp(y[2], r[2], t));
+    }
+}
+
+function applyWarningColor(element, value) {
+    value = Number(value) || 0;
+
+    element.classList.remove('normal', 'warning', 'danger');
+
+    if (value >= 85) {
+        element.classList.add('danger');
+    } else if (value >= 60) {
+        element.classList.add('warning');
+    } else {
+        element.classList.add('normal');
     }
 }
