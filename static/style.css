@@ -117,3 +117,17 @@ pre {
     height: 150px;
     overflow-y: auto;
 }
+.fill.normal {
+    background: #3b82f6;
+    box-shadow: 0 0 10px #3b82f6;
+}
+
+.fill.warning {
+    background: #f59e0b;
+    box-shadow: 0 0 10px #f59e0b;
+}
+
+.fill.danger {
+    background: #ef4444;
+    box-shadow: 0 0 10px #ef4444;
+}
